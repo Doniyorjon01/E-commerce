@@ -118,7 +118,6 @@ class DeleteAccountView(APIView):
     def post(self, request, *args, **kwargs):
         user = request.user
 
-        # ✅ Oddiy user delete logic
         user.state = -1
         user.save()
         return Response({"detail": "Account deleted successfully"}, status=status.HTTP_200_OK)
@@ -135,7 +134,6 @@ def save_image(request):
         if not image_base64:
             return JsonResponse({"error": "Image is required"}, status=400)
 
-        # ✅ Kengaytirilgan file format support
         allowed_types = ["gif", "png", "jpg", "jpeg", "mp4", "webp"]
         if file_type.lower() not in allowed_types:
             return JsonResponse({"error": f"Invalid file type. Allowed: {', '.join(allowed_types)}"}, status=400)
@@ -149,7 +147,6 @@ def save_image(request):
 
 
         try:
-            # ✅ Base64 format tekshirish
             if ',' in image_base64:
                 image_base64 = image_base64.split(',')[1]
             file_data = base64.b64decode(image_base64)

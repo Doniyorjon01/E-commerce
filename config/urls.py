@@ -15,7 +15,6 @@ from drf_yasg.generators import OpenAPISchemaGenerator
 
 from accounts.views import CustomTokenObtainPairView, save_image, serve_image
 
-
 class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
     def get_schema(self, request=None, public=False):
         try:
@@ -53,6 +52,7 @@ urlpatterns = [
 
     # Account
     path('api/v1/profile/', include("accounts.urls")),
+    path('api/v1/products/', include("products.urls")),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     path("api/v1/image/<str:filename>", serve_image, name="serve_image"),

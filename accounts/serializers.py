@@ -19,8 +19,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, min_length=8)  # ✅ Validation qo'shildi
-    # confirm_password = serializers.CharField(write_only=True)  # ✅ Qo'shildi
+    password = serializers.CharField(write_only=True, min_length=8)
+    # confirm_password = serializers.CharField(write_only=True)
 
     class Meta:
         model = models.User
@@ -71,8 +71,7 @@ class AccountUpdateSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         res = super().to_representation(instance)
-        res['email'] = instance.email  # ✅ Email qo'shish
-        # ✅ Image URL ni to'g'ri qaytarish
+        res['email'] = instance.email
         if instance.image_file:
             request = self.context.get('request')
             if request:
@@ -84,7 +83,6 @@ class AccountUpdateSerializer(serializers.ModelSerializer):
         return res
 
     def update(self, instance, validated_data):
-        # ✅ Password fieldlarini olib tashlash
         validated_data.pop('new_password', None)
         validated_data.pop('old_password', None)
 
@@ -92,7 +90,6 @@ class AccountUpdateSerializer(serializers.ModelSerializer):
         image_data = validated_data.pop('image', None)
         if image_data and image_data.strip():
             try:
-                # Base64 prefix ni olib tashlash
                 if ',' in image_data:
                     image_data = image_data.split(',')[1]
                 instance._base64_image_data = image_data

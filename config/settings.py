@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     # Local apps
     'accounts',
+    'products',
 
     # Out apps
     "rest_framework",
@@ -91,6 +92,11 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
     ],
 }
 SWAGGER_SETTINGS = {

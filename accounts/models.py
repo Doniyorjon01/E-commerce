@@ -6,6 +6,11 @@ from django.contrib.auth.models import BaseUserManager
 
 import base64
 
+USER_TYPES = (
+    ('user', 'User'),
+    ('admin', 'Admin'),
+)
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -52,6 +57,7 @@ class User(AbstractUser, BaseData):
     email = models.EmailField(unique=True)
     fullname = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(blank=True, null=True)
+    type = models.CharField(max_length=255, choices=USER_TYPES)
 
     image_file = models.ImageField(upload_to='media/', blank=True, null=True, default="")
     lang = models.CharField(max_length=10, choices=(
